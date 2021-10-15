@@ -288,6 +288,10 @@ class HTTPConnection(_HTTPConnection):
             updated_headers = {"User-Agent": _get_default_user_agent()}
             updated_headers.update(headers)
             headers = updated_headers
+        if "Host" in headers:
+            updated_headers = OrderedDict({"Host": headers["Host"]})
+            updated_headers.update(headers)
+            headers = updated_headers           
         super().request(method, url, body=body, headers=headers)
 
     def request_chunked(
